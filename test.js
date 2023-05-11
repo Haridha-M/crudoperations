@@ -1,4 +1,6 @@
 var passvalue=''
+window.onload=getdata();
+// var form=document.getElementById("form1")
 function insertUser() {
 
     fetch("http://localhost:3000/insert", {
@@ -27,7 +29,8 @@ function insertUser() {
         .then((response) => response.json())
     
         .then((json) => console.log(json));
-        location.reload();
+        // window.onload()=getdata();
+        window.onload=getdata();
     
     }
     
@@ -65,12 +68,12 @@ function updateUser() {
             document.getElementById("Name1").value='';
             document.getElementById("Email1").value='';
          document.getElementById("Comments1").value='';
-         location.reload();
+         window.onload=getdata();
         
         }
 
-        const submitbtn=document.getElementById("sub-btn");
-        const updatebtn=document.getElementById("update-btn");
+        var submitbtn=document.getElementById("sub-btn");
+        var updatebtn=document.getElementById("update-btn");
         function editUser(id,contactName,Email,Comments){
             passvalue=id;
             // document.getElementById("id1").value=id;
@@ -105,10 +108,10 @@ function updateUser() {
                 .then((response) => response.json())
             
                 .then((json) => console.log(json));
-                location.reload();
+                window.onload=getdata();
             
             }
-
+function getdata(){
             fetch('http://localhost:3000/get')
 
             .then(response => response.json())
@@ -140,7 +143,7 @@ function updateUser() {
                 document.getElementById('data').innerHTML = html
 
             })
-
+        }
         // function deleteUser() {
 
         //     fetch("http://localhost:3000/delete", {
