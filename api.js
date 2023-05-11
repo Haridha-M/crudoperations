@@ -87,7 +87,7 @@ var connection = mysql.createConnection({
 
 connection.connect();
 app.get('/getall', (req, res) => {
-    connection.query('SELECT id,contactName,Email,Comments from contactDetails', function (error, results) {
+    connection.query('SELECT id,contactName,Email,Comments,isActive from contactDetails', function (error, results) {
         if (error) {
             console.log(error);
         }
@@ -125,8 +125,8 @@ app.put('/update', (req, res) => {
         // res.end(JSON.stringify(results))
     });
 })
-app.delete('/delete', (req, res) => {
-    connection.query(`delete from contactDetails where id=?`,[req.body.id], function (error, results) {
+app.put('/delete', (req, res) => {
+    connection.query(`update contactDetails set isActive=? where id=?`,[req.body.isActive,req.body.id], function (error, results) {
         if (error) {
             console.log(error);
         }
@@ -134,6 +134,15 @@ app.delete('/delete', (req, res) => {
         res.json(results)
         // res.end(JSON.stringify(results))
         // DELETE FROM table_name WHERE condition;
+    });
+})
+app.get('/get', (req, res) => {
+    connection.query('SELECT id,contactName,Email,Comments,isActive from contactDetails where isActive=1', function (error, results) {
+        if (error) {
+            console.log(error);
+        }
+        console.log(results);
+        res.json(results);
     });
 })
 app.listen(3000, () => {
