@@ -1,5 +1,5 @@
-var passvalue=''
-window.onload=getdata();
+
+// window.onload=getdata();
 // var form=document.getElementById("form1")
 function insertUser() {
 
@@ -28,20 +28,21 @@ function insertUser() {
     
         .then((response) => response.json())
     
-        .then((json) => console.log(json));
+        .then((json) =>{ console.log(json)});
         // window.onload()=getdata();
-        window.onload=getdata();
-    
+        // window.onload();
+    location.reload();
+    // form.reset();
     }
-    
-function updateUser() {
+    // var passvalue=''
+function updateUser(id) {
 
         fetch("http://localhost:3000/update", {
         
             method: "PUT",
         
             body: JSON.stringify({
-                id:passvalue,
+                id:id,
 
                 // id:document.getElementById("id1").value,
                 
@@ -68,23 +69,25 @@ function updateUser() {
             document.getElementById("Name1").value='';
             document.getElementById("Email1").value='';
          document.getElementById("Comments1").value='';
-         window.onload=getdata();
+         location.reload();
+        //  window.onload=getdata();
         
         }
 
-        var submitbtn=document.getElementById("sub-btn");
-        var updatebtn=document.getElementById("update-btn");
+        // var submitbtn=document.getElementById("sub-btn");
+        // var updatebtn=document.getElementById("update-btn");
         function editUser(id,contactName,Email,Comments){
-            passvalue=id;
+        //    passvalue=id;
             // document.getElementById("id1").value=id;
+
               document.getElementById("Name1").value=contactName;
              document.getElementById("Email1").value=Email;
           document.getElementById("Comments1").value=Comments;
 
-          submitbtn.style.display='none';
-          updatebtn.style.display='block';
+          document.getElementById("update-btn").setAttribute("onclick","updateUser("+ id +")");
+          document.getElementById("sub-btn").style.display='none';
+          document.getElementById("update-btn").style.display='block';
         }
-        
         function deleteUser(id) {
 
             fetch("http://localhost:3000/delete", {
@@ -108,10 +111,11 @@ function updateUser() {
                 .then((response) => response.json())
             
                 .then((json) => console.log(json));
-                window.onload=getdata();
+                // window.onload=getdata();
+                location.reload();
             
             }
-function getdata(){
+// function getdata(){
             fetch('http://localhost:3000/get')
 
             .then(response => response.json())
@@ -143,7 +147,7 @@ function getdata(){
                 document.getElementById('data').innerHTML = html
 
             })
-        }
+        // }
         // function deleteUser() {
 
         //     fetch("http://localhost:3000/delete", {
