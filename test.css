@@ -4,3 +4,13 @@ thead th{
 #update-btn{
     display: none;
 }
+.row{
+    background-color: rgb(83, 176, 238);
+}
+table{
+    width: 605px;
+  
+}
+.test1,.test2{
+  padding: 50px;
+}
