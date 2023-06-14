@@ -88,6 +88,7 @@ function updateUser(id) {
           document.getElementById("sub-btn").style.display='none';
           document.getElementById("update-btn").style.display='block';
         }
+        
         function deleteUser(id) {
 
             fetch("http://localhost:3000/delete", {

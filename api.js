@@ -26,10 +26,10 @@
 // var mysql = require('mysql');
 // app = express()
 // var connection = mysql.createConnection({
-//     host: 'localhost',
-//     user: 'root',
-//     password: 'W@2915djkq#',
-//     database: 'contactDetails'
+//        host: process.env.DATABASE_HOST,
+// user: process.env.DATABASE_USER,
+// password: process.env.DATABASE_PASSWORD,
+// database: process.env.DATABASE_NAME
 // });
 
 // connection.connect();
@@ -49,12 +49,7 @@
 // const express = require("express");
 // var mysql = require('mysql');
 // app = express()
-// var connection = mysql.createConnection({
-//     host: 'localhost',
-//     user: 'root',
-//     password: 'W@2915djkq#',
-//     database: 'contactDetails'
-// });
+
 
 // connection.connect();
 // app.get('/:cName', (req, res) => {
@@ -73,16 +68,17 @@
 const express = require("express");
 var mysql = require('mysql');
 var cors = require('cors')
- 
+
 
 app = express()
 app.use(express.json())
 app.use(cors())
+
 var connection = mysql.createConnection({
-    host: 'localhost',
-    user: 'root',
-    password: 'W@2915djkq#',
-    database: 'contact'
+    host: process.env.DATABASE_HOST,
+    user: process.env.DATABASE_USER,
+    password: process.env.DATABASE_PASSWORD,
+    database: process.env.DATABASE_NAME
 });
 
 connection.connect();
@@ -106,7 +102,7 @@ app.get('/getall', (req, res) => {
 //     });
 // })
 app.post('/insert', (req, res) => {
-    connection.query('insert into contactDetails (contactName,Email,Comments) values (?,?,?)',[req.body.contactName,req.body.Email,req.body.Comments], function (error, results) {
+    connection.query('insert into contactDetails (contactName,Email,Comments) values (?,?,?)', [req.body.contactName, req.body.Email, req.body.Comments], function (error, results) {
         if (error) {
             console.log(error);
         }
@@ -116,7 +112,7 @@ app.post('/insert', (req, res) => {
     });
 })
 app.put('/update', (req, res) => {
-    connection.query(`update contactDetails set contactName=?,Email=?,Comments=? where id=?`,[req.body.contactName,req.body.Email,req.body.Comments,req.body.id], function (error, results) {
+    connection.query('update contactDetails set contactName=?,Email=?,Comments=? where id=?', [req.body.contactName, req.body.Email, req.body.Comments, req.body.id], function (error, results) {
         if (error) {
             console.log(error);
         }
@@ -126,7 +122,7 @@ app.put('/update', (req, res) => {
     });
 })
 app.put('/delete', (req, res) => {
-    connection.query(`update contactDetails set isActive=? where id=?`,[req.body.isActive,req.body.id], function (error, results) {
+    connection.query(`update contactDetails set isActive=0 where id=?`, [req.body.id], function (error, results) {
         if (error) {
             console.log(error);
         }
@@ -145,7 +141,16 @@ app.get('/get', (req, res) => {
         res.json(results);
     });
 })
-app.listen(3000, () => {
+app.get('/getbyId/:id', (req, res) => {
+    connection.query('SELECT id,contactName,Email,Comments,isActive from contactDetails where id=?', [req.params.id], function (error, results) {
+        if (error) {
+            console.log(error);
+        }
+        console.log(results);
+        res.json(results);
+    });
+})
+app.listen(9000, () => {
     console.log("listening port 3000")
 })
 
